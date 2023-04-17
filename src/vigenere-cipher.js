@@ -20,13 +20,66 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor(direct = true) {
+    this.direct = direct;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+  encrypt(message, key) {
+    if (!message || !key) {
+      throw new Error("Incorrect arguments!");
+    }
+
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const normalizedMessage = message.toUpperCase();
+    const normalizedKey = key.toUpperCase();
+    let result = "";
+
+    for (let i = 0, j = 0; i < normalizedMessage.length; i++) {
+      const char = normalizedMessage[i];
+
+      if (alphabet.includes(char)) {
+        const keyChar = normalizedKey[j % normalizedKey.length];
+        const shift = alphabet.indexOf(keyChar);
+        const encryptedChar =
+          alphabet[(alphabet.indexOf(char) + shift) % alphabet.length];
+        result += encryptedChar;
+        j++;
+      } else {
+        result += char;
+      }
+    }
+
+    return this.direct ? result : result.split("").reverse().join("");
+  }
+
+  decrypt(encryptedMessage, key) {
+    if (!encryptedMessage || !key) {
+      throw new Error("Incorrect arguments!");
+    }
+
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const normalizedMessage = encryptedMessage.toUpperCase();
+    const normalizedKey = key.toUpperCase();
+    let result = "";
+
+    for (let i = 0, j = 0; i < normalizedMessage.length; i++) {
+      const char = normalizedMessage[i];
+
+      if (alphabet.includes(char)) {
+        const keyChar = normalizedKey[j % normalizedKey.length];
+        const shift = alphabet.indexOf(keyChar);
+        const decryptedChar =
+          alphabet[
+            (alphabet.indexOf(char) - shift + alphabet.length) % alphabet.length
+          ];
+        result += decryptedChar;
+        j++;
+      } else {
+        result += char;
+      }
+    }
+
+    return this.direct ? result : result.split("").reverse().join("");
   }
 }
 
