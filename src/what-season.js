@@ -1,5 +1,14 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
+        const fakeDate = {
+          toString() {
+            return Date.prototype.toString.call(new Date());
+          },
+          [Symbol.toStringTag]: "Date",
+        };
+
+        Object.setPrototypeOf(fakeDate, Object.getPrototypeOf(new Date()));
+
 /**
  * Extract season from given date and expose the enemy scout!
  * 
@@ -12,50 +21,19 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 function getSeason(date) {
-  // throw new NotImplementedError("Not implemented");
-
-    if (!date) {
-      return "Unable to determine the time of year!";
-    }
-
-    if (
-      Object.prototype.toString.call(date) !== "[object Date]" ||
-      isNaN(date.getTime())
-    ) {
-      throw new Error("Invalid date!");
-    }
-
-  	if (Object.getPrototypeOf(date) !== Date.prototype) {
-      throw new Error("Invalid date!");
-    }
-
-  	if (
-      !(date instanceof Date) ||
-      isNaN(date.getTime()) ||
-      typeof date.getMonth !== "function" ||
-      typeof date.getFullYear !== "function" ||
-      typeof date.getDate !== "function" ||
-      typeof date.getHours !== "function" ||
-      typeof date.getMinutes !== "function" ||
-      typeof date.getSeconds !== "function" ||
-      typeof date.getMilliseconds !== "function" ||
-      typeof date.getDay !== "function"
-    ) {
-      throw new Error("Invalid date!");
-    }
-
-  	const dateString = date.toISOString().substring(0, 10);
-    const pattern = /^\d{4}-\d{2}-\d{2}$/;
-    if (!pattern.test(dateString)) {
-      throw new Error("Invalid date!");
-    }
-
-  	  if (isNaN(Date.parse(date))) {
-        throw new Error("Invalid date!");
-      }
+	if (!date) {
+      return "Unable to determine the time of year!";  
+		}
+	if (Object.prototype.toString.call(date) !== "[object Date]") {
+    throw new Error("Invalid date!");
+  }
+	try {
+		date.toDateString();
+	} catch (error) {
+		throw new Error("Invalid date!");
+	}
 
     const month = date.getMonth();
-
     switch (month) {
       case 11:
       case 0:
@@ -77,6 +55,8 @@ function getSeason(date) {
         throw new Error("Invalid date!");
     }
 }
+// getSeason(new Date(2020, 02, 31));
+// getSeason(fakeDate);
 
 module.exports = {
   getSeason
