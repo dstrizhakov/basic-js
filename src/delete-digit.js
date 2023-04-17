@@ -12,7 +12,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function deleteDigit(n) {
-  // throw new NotImplementedError('Not implemented');
 	  const numStr = n.toString(); // Convert number to string for easier manipulation
     let maxNum = -Infinity; // Start with an arbitrarily low max number
 

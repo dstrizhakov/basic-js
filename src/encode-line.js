@@ -11,7 +11,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function encodeLine(str) {
-  // throw new NotImplementedError('Not implemented');
 	  let count = 1;
     let result = "";
     for (let i = 1; i <= str.length; i++) {

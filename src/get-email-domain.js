@@ -11,7 +11,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function getEmailDomain(email) {
-  // throw new NotImplementedError('Not implemented');
   // Find the last occurrence of the "@" character
   const lastIndex = email.lastIndexOf("@");
   // Return the domain substring starting from the "@" character

@@ -16,7 +16,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function renameFiles(names) {
-  // throw new NotImplementedError('Not implemented');
     const usedNames = new Set();
     const result = [];
 

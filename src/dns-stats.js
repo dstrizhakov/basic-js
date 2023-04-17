@@ -23,7 +23,6 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function getDNSStats(domains) {
-  // throw new NotImplementedError('Not implemented');
     const stats = {};
     for (const domain of domains) {
       const parts = domain.split(".").reverse();
